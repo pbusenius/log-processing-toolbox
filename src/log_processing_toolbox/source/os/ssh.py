@@ -39,8 +39,8 @@ def open_log(file: str) -> pl.DataFrame:
                 else:
                     data["auth_success"].append("F")
 
-                data["id.resp_h"].append(x["ip"])
-                data["id.orig_h"].append(x["user"])
+                data["id.resp_h"].append(x["user"])
+                data["id.orig_h"].append(x["ip"])
                 data["ts"].append("2024 " + x["date"])
                 data["id.resp_p"].append("XXXX")
                 data["client"].append("XXXX")
