@@ -2,7 +2,7 @@ import folium
 import polars as pl
 
 from typing import Tuple
-from src.plugins import geodesic
+from log_processing_toolbox.plugins import geodesic
 
 
 def compute_centeroid(df: pl.DataFrame) -> Tuple[float, float]:
