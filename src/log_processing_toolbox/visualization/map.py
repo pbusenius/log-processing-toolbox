@@ -14,7 +14,7 @@ def add_marker(df: pl.DataFrame, m: folium.Map):
         folium.Marker(
             location=[row["latitude"], row["longitude"]],
             tooltip="Information",
-            popup=f"Country: {row["country_information"]}, City: {row["city_information"]}",
+            popup=f"Country: {row['country_information']}, City: {row['city_information']}",
             icon=folium.Icon(color="green"),
         ).add_to(m)
 
