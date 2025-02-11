@@ -13,7 +13,6 @@ def city_information(
     ip_column: str = "id.orig_h",
     location_file: str = "data/GeoLite2-City.mmdb",
 ) -> pl.DataFrame:
-    print(location_file)
     return df.with_columns(
         ip_lookup_city(df[ip_column], location_file).alias("city_information")
     )
