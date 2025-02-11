@@ -1,0 +1,14 @@
+[project]
+name = "log-processing-toolbox"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "pbusenius", email = "patrick.busenius@gmail.com" }
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
