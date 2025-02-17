@@ -10,7 +10,6 @@ def main():
 
     # analysis
     df_brute_force = ssh.brute_force_detection(zeek_df)
-    print(df_brute_force)
 
     # enrichment
     df_brute_force = ip.city_information(df_brute_force)
