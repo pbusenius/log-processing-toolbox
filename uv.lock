@@ -347,6 +347,26 @@ wheels = [
 ]
 
 [[package]]
+name = "cysystemd"
+version = "2.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d2/23/00950116890136fddd94fc6a176eb04f006e689bec4db5bf5727587ede09/cysystemd-2.0.1.tar.gz", hash = "sha256:632fe56264a18b7af3d1efd09125d6d5c1ec97d29ad6192c412ee43105821d61", size = 304093 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/23/e7/aa5441ac05471ab606bb39f507650db01d4b6d6de49d84f7129a06d8928e/cysystemd-2.0.1-cp310-cp310-manylinux_2_34_aarch64.whl", hash = "sha256:19a0b380622a11b42e7823e95a1f12312142d5a13d1b6e3cb400272e5aa3d07f", size = 2267950 },
+    { url = "https://files.pythonhosted.org/packages/58/8a/52e8a2e41d37ae6f64309c5ab30e51848c27721f188ffab553a7fc32907a/cysystemd-2.0.1-cp310-cp310-manylinux_2_34_x86_64.whl", hash = "sha256:d0aaaa11ca96e706b1a2fbe2e9ec1c3739583e00ed88dcd1d987663b7b519870", size = 2394766 },
+    { url = "https://files.pythonhosted.org/packages/a5/b9/86c887ec4879edcba99e6db1bcddc9c35e989a489a4761a3987be82f3957/cysystemd-2.0.1-cp311-cp311-manylinux_2_34_aarch64.whl", hash = "sha256:8f50d7d4057406c4b30ae5604f061687fcaa7c5e541935c7b4817166c870fc11", size = 2326556 },
+    { url = "https://files.pythonhosted.org/packages/ac/05/699da6b7463c772312f6ef91784d199b65574a925019e18d7e56ba591858/cysystemd-2.0.1-cp311-cp311-manylinux_2_34_x86_64.whl", hash = "sha256:78dc5187193b2b959987e38c29d66e9fb625de5f93f2aec58eb7553aa504ed1d", size = 2455862 },
+    { url = "https://files.pythonhosted.org/packages/62/41/ced57b3e8f65840c7a793baf0c53715ded901458cb3ff5c56225d7c39b23/cysystemd-2.0.1-cp312-cp312-manylinux_2_34_aarch64.whl", hash = "sha256:cd5543e1b1d96c5f327203506a46df96235e8b984cf0cfb4b85f0348975b7957", size = 2319026 },
+    { url = "https://files.pythonhosted.org/packages/21/22/afd2153b4100c7a8849a0810932c0636143b226d9ee0d8a761e233f0f8ce/cysystemd-2.0.1-cp312-cp312-manylinux_2_34_x86_64.whl", hash = "sha256:39b03dcfced76957ede5f3f21956b5687a0511bdd1d0d41f2d3dffc9df32320d", size = 2454117 },
+    { url = "https://files.pythonhosted.org/packages/51/66/48174df96d46d426d6a3bf605df21b10aa98752bd98f32b7e8e1edaddb08/cysystemd-2.0.1-cp313-cp313-manylinux_2_34_aarch64.whl", hash = "sha256:017b924d42ee92f6736714b78d51f81aded6b5f34e44dc7e2e92cbe2598e3611", size = 2304347 },
+    { url = "https://files.pythonhosted.org/packages/c8/8a/c02db9ef01f0dc1dec06f0cbbe2e4132b119b6ae455a650d736b47fdd7a6/cysystemd-2.0.1-cp313-cp313-manylinux_2_34_x86_64.whl", hash = "sha256:d9d89125cafee3cc0a898faf9fe53f9166ea6625393b75d606eef2901a8c3023", size = 2438764 },
+    { url = "https://files.pythonhosted.org/packages/16/17/734a21206778bdd0a30ef173f6d6ed5ad31040f87ee9b04f4b929fa2b787/cysystemd-2.0.1-cp38-cp38-manylinux_2_34_aarch64.whl", hash = "sha256:b2dcd4f5788955787d08e43de1276cb5a6720e13e7fc6765aed4fe6fa3355144", size = 2302151 },
+    { url = "https://files.pythonhosted.org/packages/62/86/606bb5fc2ed44b939029953e4f2b6bdccf029a10a3e2d4e402be455974a2/cysystemd-2.0.1-cp38-cp38-manylinux_2_34_x86_64.whl", hash = "sha256:292f3f38b6fc6dc01a44c1053d8e2907ef857c09282fa904ed4742113eb36fdc", size = 2438356 },
+    { url = "https://files.pythonhosted.org/packages/87/f4/9e4c694d562ef7ddcf8bd93ac72ef750878374bfdde0f82dd8911f9147c0/cysystemd-2.0.1-cp39-cp39-manylinux_2_34_aarch64.whl", hash = "sha256:ed55acd18bcc576a5b1af81ae59fb86042ee019b642f6cfed9221b963f05aeea", size = 2264411 },
+    { url = "https://files.pythonhosted.org/packages/15/60/3f7e6417cf4618bad6ab77295e57c06d612361f6b63aa6f8ab83b694579f/cysystemd-2.0.1-cp39-cp39-manylinux_2_34_x86_64.whl", hash = "sha256:0bb9b4380cb82202aeb5aedb5a6e63f257eac5d6192c24d054656e8329ab6cf0", size = 2398944 },
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 source = { registry = "https://pypi.org/simple" }
@@ -746,6 +766,7 @@ name = "log-processing-toolbox"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "cysystemd" },
     { name = "folium", version = "0.18.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "folium", version = "0.19.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
     { name = "matplotlib", version = "3.7.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
@@ -757,17 +778,20 @@ dependencies = [
     { name = "pyarrow", version = "17.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "pyarrow", version = "19.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
     { name = "seaborn" },
+    { name = "systemd" },
     { name = "zat" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "cysystemd", specifier = ">=2.0.1" },
     { name = "folium", specifier = ">=0.18.0" },
     { name = "matplotlib", specifier = ">=3.7.5" },
     { name = "polars", specifier = ">=1.8.2" },
     { name = "polars-maxminddb", specifier = ">=0.2.3" },
     { name = "pyarrow", specifier = ">=17.0.0" },
     { name = "seaborn", specifier = ">=0.13.2" },
+    { name = "systemd", specifier = ">=0.17.1" },
     { name = "zat", specifier = ">=0.4.7" },
 ]
 
@@ -2062,6 +2086,15 @@ sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050 },
 ]
+
+[[package]]
+name = "systemd"
+version = "0.17.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cysystemd" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/22/c5/130c4c053315655308819fddc38e522640000ba32e2799512a15a4b2ea65/systemd-0.17.1.tar.gz", hash = "sha256:f502cca7306efcaa6bfd6a4c7d1117822e05e5abede5040d5866235c88ab7ccf", size = 1345 }
 
 [[package]]
 name = "threadpoolctl"

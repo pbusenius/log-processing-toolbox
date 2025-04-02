@@ -8,12 +8,14 @@ authors = [
 ]
 requires-python = ">=3.8"
 dependencies = [
+    "cysystemd>=2.0.1",
     "folium>=0.18.0",
     "matplotlib>=3.7.5",
     "polars>=1.8.2",
     "polars-maxminddb>=0.2.3",
     "pyarrow>=17.0.0",
     "seaborn>=0.13.2",
+    "systemd>=0.17.1",
     "zat>=0.4.7",
 ]
 
