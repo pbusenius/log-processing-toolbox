@@ -3,9 +3,14 @@ from log_processing_toolbox.source.os import ssh as ssh_source
 
 
 def main():
-    df = ssh_source.open_journal_log("/media/pbusenius/One Touch/logs/146.70.101.118/journal")
+    ssh_df = ssh_source.open_journal_log("/media/pbusenius/One Touch/logs/146.70.101.118/journal")
 
-    print(df)
+    # filter
+    ssh_df = ssh_df.filter(
+        pl.col("auth_success") == "T"
+    )
+
+    print(ssh_df)
 
 
 
