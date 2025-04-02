@@ -91,7 +91,6 @@ def open_journal_log(directory: str) -> pl.DataFrame:
                 number_of_message += 1
                 try:
                     log_line = f"{record.data['SYSLOG_TIMESTAMP']}{record.data['_HOSTNAME']} {record.data['SYSLOG_IDENTIFIER']}[{record.data['_PID']}]: {record.data['MESSAGE']}"
-                    # print(record.data)
                     x = auth_log_regex.match(log_line)
                     if x is not None:
                         if "Accepted" in x["type"]:
