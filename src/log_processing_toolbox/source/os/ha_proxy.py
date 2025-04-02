@@ -30,10 +30,10 @@ def open_log(file: str) -> pl.DataFrame:
                 data["id.resp_p"].append(x["to_port"])
                 data["id.orig_h"].append(x["from_ip"])
                 data["id.orig_p"].append(x["from_port"])
-                data["ts"].append(x["date"])
+                data["ts"].append("2024" + x["date"])
 
     df = pl.DataFrame(data)
 
-    # df = cast_columns(df)
+    df = cast_columns(df)
 
     return df
