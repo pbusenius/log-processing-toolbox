@@ -15,22 +15,18 @@ def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def open_log(file: str) -> pl.DataFrame:
-    data = {
+def creat_empty_log_collection():
+    return {
         "ts": [],
         "id.orig_h": [],
         "id.resp_h": [],
         "id.resp_p": [],
-        "auth_success": [],
-        "client": [],
-        "server": [],
-        "cipher_alg": [],
-        "mac_alg": [],
-        "compression_alg": [],
-        "kex_alg": [],
-        "host_key_alg": [],
-        "host_key": [],
+        "auth_success": []
     }
+
+
+def open_log(file: str) -> pl.DataFrame:
+    log_collection = creat_empty_log_collection()
 
     with open(file, "r") as file:
         lines = file.readlines()
@@ -38,84 +34,51 @@ def open_log(file: str) -> pl.DataFrame:
             x = auth_log_regex.match(line)
             if x is not None:
                 if "Accepted" in x["type"]:
-                    data["auth_success"].append("T")
+                    log_collection["auth_success"].append("T")
                 else:
-                    data["auth_success"].append("F")
+                    log_collection["auth_success"].append("F")
 
-                data["id.resp_h"].append(x["user"])
-                data["id.orig_h"].append(x["ip"])
-                data["ts"].append("2024 " + x["date"])
-                data["id.resp_p"].append("XXXX")
-                data["client"].append("XXXX")
-                data["server"].append("XXXX")
-                data["cipher_alg"].append("XXXX")
-                data["mac_alg"].append("XXXX")
-                data["compression_alg"].append("XXXX")
-                data["kex_alg"].append("XXXX")
-                data["host_key_alg"].append("XXXX")
-                data["host_key"].append("XXXX")
+                log_collection["id.resp_h"].append(x["user"])
+                log_collection["id.orig_h"].append(x["ip"])
+                log_collection["ts"].append("2024 " + x["date"])
 
-    df = pl.DataFrame(data)
+    df = pl.DataFrame(log_collection)
 
     df = cast_columns(df)
 
     return df
 
 
+def constuct_log_string(record) -> str:
+    return f"{record.data['SYSLOG_TIMESTAMP']}{record.data['_HOSTNAME']} {record.data['SYSLOG_IDENTIFIER']}[{record.data['_PID']}]: {record.data['MESSAGE']}"
+
+
 def open_journal_log(directory: str) -> pl.DataFrame:
-    number_of_message = 0
-    data = {
-        "ts": [],
-        "id.orig_h": [],
-        "id.resp_h": [],
-        "id.resp_p": [],
-        "auth_success": [],
-        "client": [],
-        "server": [],
-        "cipher_alg": [],
-        "mac_alg": [],
-        "compression_alg": [],
-        "kex_alg": [],
-        "host_key_alg": [],
-        "host_key": [],
-    }
+    log_collection = creat_empty_log_collection()
 
     journal_reader = JournalReader()
     journal_reader.open_directory(directory)
 
     for record in journal_reader:
-        if number_of_message > 10000:
-            break
         try:
             if record.data["SYSLOG_IDENTIFIER"] == "sshd":
-                number_of_message += 1
                 try:
-                    log_line = f"{record.data['SYSLOG_TIMESTAMP']}{record.data['_HOSTNAME']} {record.data['SYSLOG_IDENTIFIER']}[{record.data['_PID']}]: {record.data['MESSAGE']}"
-                    x = auth_log_regex.match(log_line)
+                    x = auth_log_regex.match(creat_empty_log_collection(record))
                     if x is not None:
                         if "Accepted" in x["type"]:
-                            data["auth_success"].append("T")
+                            log_collection["auth_success"].append("T")
                         else:
-                            data["auth_success"].append("F")
+                            log_collection["auth_success"].append("F")
 
-                        data["id.resp_h"].append(x["user"])
-                        data["id.orig_h"].append(x["ip"])
-                        data["ts"].append("2024 " + x["date"])
-                        data["id.resp_p"].append("XXXX")
-                        data["client"].append("XXXX")
-                        data["server"].append("XXXX")
-                        data["cipher_alg"].append("XXXX")
-                        data["mac_alg"].append("XXXX")
-                        data["compression_alg"].append("XXXX")
-                        data["kex_alg"].append("XXXX")
-                        data["host_key_alg"].append("XXXX")
-                        data["host_key"].append("XXXX")
+                        log_collection["id.resp_h"].append(x["user"])
+                        log_collection["id.orig_h"].append(x["ip"])
+                        log_collection["ts"].append("2024 " + x["date"])
                 except TypeError:
                     pass
         except KeyError:
             pass
 
-    df = pl.DataFrame(data)
+    df = pl.DataFrame(log_collection)
 
     df = cast_columns(df)
 
