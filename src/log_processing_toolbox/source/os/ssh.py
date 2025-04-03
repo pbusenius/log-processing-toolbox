@@ -21,8 +21,37 @@ def creat_empty_log_collection():
         "id.orig_h": [],
         "id.resp_h": [],
         "id.resp_p": [],
-        "auth_success": []
+        "auth_success": [],
+        "client": [],
+        "server": [],
+        "cipher_alg": [],
+        "mac_alg": [],
+        "compression_alg": [],
+        "kex_alg": [],
+        "host_key_alg": [],
+        "host_key": [],
     }
+
+
+def add_entry(log_collection, x):
+    if "Accepted" in x["type"]:
+        log_collection["auth_success"].append("T")
+    else:
+        log_collection["auth_success"].append("F")
+
+    log_collection["id.resp_h"].append(x["user"])
+    log_collection["id.orig_h"].append(x["ip"])
+    log_collection["ts"].append("2024 " + x["date"])
+    log_collection["id.resp_p"].append("XXXX")
+    log_collection["client"].append("XXXX")
+    log_collection["server"].append("XXXX")
+    log_collection["cipher_alg"].append("XXXX")
+    log_collection["mac_alg"].append("XXXX")
+    log_collection["compression_alg"].append("XXXX")
+    log_collection["kex_alg"].append("XXXX")
+    log_collection["host_key_alg"].append("XXXX")
+    log_collection["host_key"].append("XXXX")
+
 
 
 def open_log(file: str) -> pl.DataFrame:
@@ -33,14 +62,8 @@ def open_log(file: str) -> pl.DataFrame:
         for line in lines:
             x = auth_log_regex.match(line)
             if x is not None:
-                if "Accepted" in x["type"]:
-                    log_collection["auth_success"].append("T")
-                else:
-                    log_collection["auth_success"].append("F")
+                add_entry(log_collection, x)
 
-                log_collection["id.resp_h"].append(x["user"])
-                log_collection["id.orig_h"].append(x["ip"])
-                log_collection["ts"].append("2024 " + x["date"])
 
     df = pl.DataFrame(log_collection)
 
@@ -65,14 +88,7 @@ def open_journal_log(directory: str) -> pl.DataFrame:
                 try:
                     x = auth_log_regex.match(creat_empty_log_collection(record))
                     if x is not None:
-                        if "Accepted" in x["type"]:
-                            log_collection["auth_success"].append("T")
-                        else:
-                            log_collection["auth_success"].append("F")
-
-                        log_collection["id.resp_h"].append(x["user"])
-                        log_collection["id.orig_h"].append(x["ip"])
-                        log_collection["ts"].append("2024 " + x["date"])
+                        add_entry(log_collection, x)
                 except TypeError:
                     pass
         except KeyError:
