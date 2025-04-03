@@ -15,10 +15,11 @@ def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def creat_empty_log_collection():
+def create_empty_log_collection():
     return {
         "ts": [],
         "id.orig_h": [],
+        "id.orig_p": [],
         "id.resp_h": [],
         "id.resp_p": [],
         "auth_success": [],
@@ -41,6 +42,7 @@ def add_entry(log_collection, x):
 
     log_collection["id.resp_h"].append(x["user"])
     log_collection["id.orig_h"].append(x["ip"])
+    log_collection["id.orig_p"].append(x["port"])
     log_collection["ts"].append("2024 " + x["date"])
     log_collection["id.resp_p"].append("XXXX")
     log_collection["client"].append("XXXX")
@@ -55,7 +57,7 @@ def add_entry(log_collection, x):
 
 
 def open_log(file: str) -> pl.DataFrame:
-    log_collection = creat_empty_log_collection()
+    log_collection = create_empty_log_collection()
 
     with open(file, "r") as file:
         lines = file.readlines()
@@ -77,7 +79,7 @@ def constuct_log_string(record) -> str:
 
 
 def open_journal_log(directory: str) -> pl.DataFrame:
-    log_collection = creat_empty_log_collection()
+    log_collection = create_empty_log_collection()
 
     journal_reader = JournalReader()
     journal_reader.open_directory(directory)
@@ -86,7 +88,7 @@ def open_journal_log(directory: str) -> pl.DataFrame:
         try:
             if record.data["SYSLOG_IDENTIFIER"] == "sshd":
                 try:
-                    x = auth_log_regex.match(creat_empty_log_collection(record))
+                    x = auth_log_regex.match(constuct_log_string(record))
                     if x is not None:
                         add_entry(log_collection, x)
                 except TypeError:
