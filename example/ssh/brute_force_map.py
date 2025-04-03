@@ -6,10 +6,10 @@ from log_processing_toolbox.visualization import map
 
 def main():
     # source
-    zeek_df = ssh_zeek_source.open_log("data/auth.log")
+    ssh_df = ssh_zeek_source.open_log("data/auth.log")
 
     # analysis
-    df_brute_force = ssh.brute_force_detection(zeek_df)
+    df_brute_force = ssh.brute_force_detection(ssh_df)
 
     # enrichment
     df_brute_force = ip.city_information(df_brute_force)
