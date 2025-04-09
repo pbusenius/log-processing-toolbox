@@ -12,6 +12,7 @@ dependencies = [
     "folium>=0.18.0",
     "matplotlib>=3.7.5",
     "polars>=1.8.2",
+    "polars-geodesic-distance>=0.2.0",
     "polars-maxminddb>=0.2.3",
     "pyarrow>=17.0.0",
     "seaborn>=0.13.2",
