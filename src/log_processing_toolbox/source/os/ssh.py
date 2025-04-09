@@ -54,7 +54,6 @@ def add_entry(log_collection, x):
     log_collection["host_key"].append("XXXX")
 
 
-
 def open_log(file: str) -> pl.DataFrame:
     log_collection = create_empty_log_collection()
 
