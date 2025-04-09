@@ -1,4 +1,30 @@
 import polars as pl
+from polars_geodesic_distance import distance
+
+
+THEORETICAL_SPEED_REQUIRED_THRESHOLD= 100
+
+
+def impossible_travel(df: pl.DataFrame, ip_column: str = "id.orig_h"):
+    # TODO:
+
+    # groupby user and shift to get login a and login b and time a and time b
+
+    # compute distance from login a ip to login b ip
+    df = df.with_columns(distance=distance("latitude_a", "longitude_a", "latitude_b", "longitude_b"))
+
+    df = df.with_columns(
+        (pl.col("timestamp_b") - pl.col("timestamp_a")).alias("time_between_logins")
+    )
+
+    # compute theoretical speed required to travel from point a to point b    
+    
+    # apply threshold to get impossible travel logins
+    df = df.filter(
+        pl.col("theoretical_speed") <= THEORETICAL_SPEED_REQUIRED_THRESHOLD
+    )
+
+    return df
 
 
 def brute_force_detection(
