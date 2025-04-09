@@ -47,3 +47,15 @@ def asn_information(
     return df.with_columns(
         ip_lookup_asn(df[ip_column], location_file).alias("asn_information")
     )
+
+
+def is_vpn(df: pl.DataFrame, ip_column: str = "id.orig_h"):
+    pass
+
+
+def is_tor(df: pl.DataFrame, ip_column: str = "id.orig_h"):
+    pass
+
+
+def is_proxy(df: pl.DataFrame, ip_column: str = "id.orig_h"):
+    pass
