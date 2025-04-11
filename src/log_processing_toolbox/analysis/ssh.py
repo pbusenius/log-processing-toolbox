@@ -5,10 +5,13 @@ from polars_geodesic_distance import distance
 THEORETICAL_SPEED_REQUIRED_THRESHOLD= 100
 
 
-def impossible_travel(df: pl.DataFrame, ip_column: str = "id.orig_h"):
+def impossible_travel(df: pl.DataFrame, user: str = "id.orig_h"):
     # TODO:
 
     # groupby user and shift to get login a and login b and time a and time b
+    df.group_by(user).agg(
+        pl.col(user)
+    )
 
     # compute distance from login a ip to login b ip
     df = df.with_columns(distance=distance("latitude_a", "longitude_a", "latitude_b", "longitude_b"))
@@ -18,6 +21,7 @@ def impossible_travel(df: pl.DataFrame, ip_column: str = "id.orig_h"):
     )
 
     # compute theoretical speed required to travel from point a to point b    
+    df = df.with_columns(speed=(pl.col("distance") / pl.col("time_between_logings")) * 3.6)
     
     # apply threshold to get impossible travel logins
     df = df.filter(
