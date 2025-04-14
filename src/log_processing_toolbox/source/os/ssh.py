@@ -4,7 +4,7 @@ import polars as pl
 from cysystemd.reader import JournalReader
 
 auth_log_regex = re.compile(
-    r"(?P<date>\S*\s*\d*\s\d{2}:\d{2}:\d{2})\s(?P<user>\S*)\s(?P<service>\S*\s)(?P<type>Disconnected from invalid user (?P<disconnected_remote_user>\S*) |Invalid user (?P<invalid_remote_user>\S*) from |Received disconnect from |Accepted publickey for (?P<accedpted_public_key_remote_user>\S*) from |Failed password for invalid user (?P<invalid_user_failed_password>\S*) from |Failed password for (?P<failed_password_user>\S*) from )(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) port (?P<port>\d*)( ssh2(: RSA (?P<rsa>SHA256:\S*))?)?"
+    r"(?P<date>\S*\s*\d*\s\d{2}:\d{2}:\d{2})\s(?P<user>\S*)\s(?P<service>\S*\s)(?P<type>Disconnected from invalid user (?P<disconnected_remote_user>\S*) |Invalid user (?P<invalid_remote_user>\S*) from |Received disconnect from |Accepted publickey for (?P<accepted_public_key_remote_user>\S*) from |Failed password for invalid user (?P<invalid_user_failed_password>\S*) from |Failed password for (?P<failed_password_user>\S*) from )(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) port (?P<port>\d*)( ssh2(: RSA (?P<rsa>SHA256:\S*))?)?"
 )
 
 
@@ -14,6 +14,23 @@ def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
+def extract_user_name(x) -> str:
+    user_name = ""
+
+    if x["disconnected_remote_user"] != None:
+        user_name = x["disconnected_remote_user"]
+    elif x["invalid_remote_user"] != None:
+        user_name = x["invalid_remote_user"]        
+    elif x["accepted_public_key_remote_user"] != None:
+        user_name = x["accepted_public_key_remote_user"]
+    elif x["invalid_user_failed_password"] != None:
+        user_name = x["invalid_user_failed_password"]
+    elif x["failed_password_user"] != None:
+        user_name = x["failed_password_user"]
+    
+    return user_name
+
+
 def create_empty_log_collection():
     return {
         "ts": [],
@@ -21,6 +38,7 @@ def create_empty_log_collection():
         "id.orig_p": [],
         "id.resp_h": [],
         "id.resp_p": [],
+        "user_name": [],
         "auth_success": [],
         "client": [],
         "server": [],
@@ -38,6 +56,8 @@ def add_entry(log_collection, x):
         log_collection["auth_success"].append("T")
     else:
         log_collection["auth_success"].append("F")
+
+    log_collection["user_name"].append(extract_user_name(x))
 
     log_collection["id.resp_h"].append(x["user"])
     log_collection["id.orig_h"].append(x["ip"])
