@@ -5,7 +5,8 @@ from log_processing_toolbox.source.os import ssh as ssh_source
 def main():
     ssh_df = ssh_source.open_journal_log("data/journal")
 
-    ssh_df.write_csv("146.70.125.123_ssh.csv")
+    # export
+    ssh_df.write_csv("ip_ssh.csv")
 
     # filter
     ssh_df = ssh_df.filter(
