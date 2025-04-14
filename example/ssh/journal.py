@@ -9,9 +9,7 @@ def main():
     ssh_df.write_csv("ip_ssh.csv")
 
     # filter
-    ssh_df = ssh_df.filter(
-        pl.col("auth_success") == "T"
-    )
+    ssh_df = ssh_df.filter(pl.col("auth_success") == "T")
 
 
 if __name__ == "__main__":

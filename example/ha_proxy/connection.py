@@ -16,7 +16,5 @@ def main():
     print(connection_df)
 
 
-
-
 if __name__ == "__main__":
     main()

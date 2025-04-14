@@ -20,14 +20,14 @@ def extract_user_name(x) -> str:
     if x["disconnected_remote_user"] != None:
         user_name = x["disconnected_remote_user"]
     elif x["invalid_remote_user"] != None:
-        user_name = x["invalid_remote_user"]        
+        user_name = x["invalid_remote_user"]
     elif x["accepted_public_key_remote_user"] != None:
         user_name = x["accepted_public_key_remote_user"]
     elif x["invalid_user_failed_password"] != None:
         user_name = x["invalid_user_failed_password"]
     elif x["failed_password_user"] != None:
         user_name = x["failed_password_user"]
-    
+
     return user_name
 
 
@@ -83,7 +83,6 @@ def open_log(file: str) -> pl.DataFrame:
             x = auth_log_regex.match(line)
             if x is not None:
                 add_entry(log_collection, x)
-
 
     df = pl.DataFrame(log_collection)
 

@@ -5,10 +5,7 @@ from cysystemd.reader import JournalReader
 
 
 def create_empty_log_collection():
-    return {
-        "ts": [],
-        "message": []
-    }
+    return {"ts": [], "message": []}
 
 
 def constuct_log_string(record) -> str:

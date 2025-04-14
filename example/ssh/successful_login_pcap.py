@@ -16,9 +16,7 @@ def main():
     print(ssh_df)
 
     # filter
-    ssh_df = ssh_df.filter(
-        pl.col("auth_success") == "T"
-    )
+    ssh_df = ssh_df.filter(pl.col("auth_success") == "T")
 
     print(ssh_df)
 

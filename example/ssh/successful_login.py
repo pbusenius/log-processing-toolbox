@@ -16,14 +16,10 @@ def main():
     ssh_df = ip.asn_information(ssh_df)
 
     # filter
-    ssh_df = ssh_df.filter(
-        pl.col("auth_success") == "T"
-    )
+    ssh_df = ssh_df.filter(pl.col("auth_success") == "T")
 
     print(ssh_df)
 
 
 if __name__ == "__main__":
     main()
-
-
