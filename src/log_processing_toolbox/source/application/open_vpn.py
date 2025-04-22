@@ -32,7 +32,6 @@ def add_entry(log_collection, x):
 
 
 def constuct_log_string(record) -> str:
-    print(record.date.tzinfo)
     return f"{record.date.strftime('%Y-%m-%d %H:%M:%S')} {record.data['_HOSTNAME']} {record.data['SYSLOG_IDENTIFIER']}[{record.data['_PID']}]: {record.data['MESSAGE']}"
 
 
