@@ -4,7 +4,7 @@ import polars as pl
 from cysystemd.reader import JournalReader, Rule
 
 auth_log_regex = re.compile(
-    r"(?P<date>\S*\s*\d*\s\d{2}:\d{2}:\d{2})\s(?P<user>\S*)\s(?P<service>\S*\s)(?P<type>Disconnected from invalid user (?P<disconnected_remote_user>\S*) |Invalid user (?P<invalid_remote_user>\S*) from |Received disconnect from |Accepted publickey for (?P<accepted_public_key_remote_user>\S*) from |Failed password for invalid user (?P<invalid_user_failed_password>\S*) from |Failed password for (?P<failed_password_user>\S*) from |Accepted password for (?P<accepted_password_remote_user>\S*) from )(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) port (?P<port>\d*)( ssh2(: RSA (?P<rsa>SHA256:\S*))?)?"
+    r"(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s(?P<user>\S*)\s(?P<service>\S*\s)(?P<type>Disconnected from invalid user (?P<disconnected_remote_user>\S*) |Invalid user (?P<invalid_remote_user>\S*) from |Received disconnect from |Accepted publickey for (?P<accepted_public_key_remote_user>\S*) from |Failed password for invalid user (?P<invalid_user_failed_password>\S*) from |Failed password for (?P<failed_password_user>\S*) from |Accepted password for (?P<accepted_password_remote_user>\S*) from )(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) port (?P<port>\d*)( ssh2(: RSA (?P<rsa>SHA256:\S*))?)?"
 )
 
 rules = (
@@ -13,7 +13,7 @@ rules = (
 
 def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
     return df.with_columns(
-        pl.col("ts").str.to_datetime("%Y %b  %d %H:%M:%S"),
+        pl.col("ts").str.to_datetime("%Y-%m-%d %H:%M:%S"),
     )
 
 
@@ -65,7 +65,7 @@ def add_entry(log_collection, x):
     log_collection["id.resp_h"].append(x["user"])
     log_collection["id.orig_h"].append(x["ip"])
     log_collection["id.orig_p"].append(x["port"])
-    log_collection["ts"].append("2024 " + x["date"])
+    log_collection["ts"].append(x["date"])
     log_collection["id.resp_p"].append("XXXX")
     log_collection["client"].append("XXXX")
     log_collection["server"].append("XXXX")
@@ -95,7 +95,7 @@ def open_log(file: str) -> pl.DataFrame:
 
 
 def constuct_log_string(record) -> str:
-    return f"{record.data['SYSLOG_TIMESTAMP']}{record.data['_HOSTNAME']} {record.data['SYSLOG_IDENTIFIER']}[{record.data['_PID']}]: {record.data['MESSAGE']}"
+    return f"{record.date.strftime('%Y-%m-%d %H:%M:%S')} {record.data['_HOSTNAME']} {record.data['SYSLOG_IDENTIFIER']}[{record.data['_PID']}]: {record.data['MESSAGE']}"
 
 
 def open_journal_log(directory: str) -> pl.DataFrame:
