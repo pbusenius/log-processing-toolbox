@@ -1,7 +1,7 @@
 import polars as pl
 
 from log_processing_toolbox.enrichment import ip
-from log_processing_toolbox.source.os import ha_proxy
+from log_processing_toolbox.source.application import ha_proxy
 
 
 def main():
