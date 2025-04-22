@@ -13,13 +13,9 @@ def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
         pl.col("ts").str.to_datetime("%Y %b  %d %H:%M:%S"),
     )
 
+
 def create_empty_log_collection():
-    return {
-        "ts": [],
-        "id.orig_h": [],
-        "name": [],
-        "command": []
-    }
+    return {"ts": [], "id.orig_h": [], "name": [], "command": []}
 
 
 def add_event_entry(log_collection, x, year: str):
