@@ -3,10 +3,7 @@ import polars as pl
 
 from cysystemd.reader import JournalReader, Rule
 
-rules = (
-  Rule("SYSLOG_IDENTIFIER", "sshd")
-)
-
+rules = Rule("SYSLOG_IDENTIFIER", "sshd")
 
 
 def create_empty_log_collection():

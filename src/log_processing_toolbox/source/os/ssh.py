@@ -7,9 +7,8 @@ auth_log_regex = re.compile(
     r"(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s(?P<user>\S*)\s(?P<service>\S*\s)(?P<type>Disconnected from invalid user (?P<disconnected_remote_user>\S*) |Invalid user (?P<invalid_remote_user>\S*) from |Received disconnect from |Accepted publickey for (?P<accepted_public_key_remote_user>\S*) from |Failed password for invalid user (?P<invalid_user_failed_password>\S*) from |Failed password for (?P<failed_password_user>\S*) from |Accepted password for (?P<accepted_password_remote_user>\S*) from )(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) port (?P<port>\d*)( ssh2(: RSA (?P<rsa>SHA256:\S*))?)?"
 )
 
-rules = (
-  Rule("SYSLOG_IDENTIFIER", "sshd")
-)
+rules = Rule("SYSLOG_IDENTIFIER", "sshd")
+
 
 def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
     return df.with_columns(

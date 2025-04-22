@@ -5,7 +5,9 @@ from log_processing_toolbox.source.application import open_vpn as open_vpn_sourc
 
 
 def main():
-    vpn_df = open_vpn_source.open_journal_log("/media/pbusenius/ShadowCape/tmp/openvpn_logs/log/journal")
+    vpn_df = open_vpn_source.open_journal_log(
+        "/media/pbusenius/ShadowCape/tmp/openvpn_logs/log/journal"
+    )
 
     vpn_df = vpn_df.group_by("id.orig_h").agg(
         pl.col("ts").count().alias("number_of_log_entries"),
@@ -18,10 +20,8 @@ def main():
     vpn_df = ip.country_information(vpn_df)
     vpn_df = ip.asn_information(vpn_df)
 
-
     # export
     vpn_df.write_csv("openvpn_ips.csv")
-
 
 
 if __name__ == "__main__":

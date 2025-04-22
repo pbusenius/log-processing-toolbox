@@ -6,16 +6,16 @@ from cysystemd.reader import JournalReader, Rule
 
 openvpn_log_regex = re.compile(
     r"(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\svpn\sopenvpn\S* \S*\/(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}):(?P<port>\d*).*"
-)   
-
-rules = (
-  Rule("SYSLOG_IDENTIFIER", "openvpn")
 )
+
+rules = Rule("SYSLOG_IDENTIFIER", "openvpn")
+
 
 def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
     return df.with_columns(
         pl.col("ts").str.to_datetime("%Y-%m-%d %H:%M:%S"),
     )
+
 
 def create_empty_log_collection():
     return {
