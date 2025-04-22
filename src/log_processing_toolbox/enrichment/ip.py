@@ -51,17 +51,21 @@ def asn_information(
 
 
 def is_public(df: pl.DataFrame, ip_column: str = "id.orig_h"):
-    return df.with_columns(  
+    return df.with_columns(
         pl.col(ip_column)
-        .map_elements(lambda x: ipaddress.ip_address(x).is_private, return_dtype=pl.Boolean)
+        .map_elements(
+            lambda x: ipaddress.ip_address(x).is_private, return_dtype=pl.Boolean
+        )
         .alias("is_private")
     )
 
 
 def is_global(df: pl.DataFrame, ip_column: str = "id.orig_h"):
-    return df.with_columns(  
+    return df.with_columns(
         pl.col(ip_column)
-        .map_elements(lambda x: ipaddress.ip_address(x).is_global, return_dtype=pl.Boolean)
+        .map_elements(
+            lambda x: ipaddress.ip_address(x).is_global, return_dtype=pl.Boolean
+        )
         .alias("is_global")
     )
 
