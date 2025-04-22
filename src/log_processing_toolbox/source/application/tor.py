@@ -1,7 +1,12 @@
 import re
 import polars as pl
 
-from cysystemd.reader import JournalReader
+from cysystemd.reader import JournalReader, Rule
+
+rules = (
+  Rule("SYSLOG_IDENTIFIER", "sshd")
+)
+
 
 
 def create_empty_log_collection():
@@ -16,12 +21,11 @@ def open_journal_log(directory: str) -> pl.DataFrame:
     journal_reader = JournalReader()
     journal_reader.open_directory(directory)
 
+    journal_reader.add_filter(rules)
+
     for record in journal_reader:
         try:
             if record.data["SYSLOG_IDENTIFIER"] == "Tor":
-                try:
-                    print(constuct_log_string(record))
-                except TypeError:
-                    pass
-        except KeyError:
+                print(constuct_log_string(record))
+        except (KeyError, TypeError):
             pass
