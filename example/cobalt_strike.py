@@ -7,12 +7,9 @@ from log_processing_toolbox.source.application import cobalt_strike_team
 
 def main():
     files = glob.glob("data/logs/*/events.log")
-    print(files)
 
     # source
     df = cobalt_strike_team.open_events_log(files)
-
-    print(df)
 
     # enrichment
     df = ip.city_information(df)
