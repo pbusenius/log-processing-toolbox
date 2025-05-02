@@ -5,7 +5,7 @@ from cysystemd.reader import JournalReader, Rule
 
 
 openvpn_log_regex = re.compile(
-    r"(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\svpn\sopenvpn\S* \S*\/(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}):(?P<port>\d*).*"
+    r"(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\svpn\sopenvpn\S* \S*\/(?P<ip>\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}):(?P<port>\d*).*depth=0, CN=(?P<client>\S*)"
 )
 
 rules = Rule("SYSLOG_IDENTIFIER", "openvpn")
@@ -22,6 +22,7 @@ def create_empty_log_collection():
         "ts": [],
         "id.orig_h": [],
         "id.orig_p": [],
+        "client": []
     }
 
 
@@ -29,6 +30,7 @@ def add_entry(log_collection, x):
     log_collection["id.orig_h"].append(x["ip"])
     log_collection["id.orig_p"].append(x["port"])
     log_collection["ts"].append(x["date"])
+    log_collection["client"].append(x["client"])
 
 
 def constuct_log_string(record) -> str:
@@ -46,7 +48,8 @@ def open_journal_log(directory: str) -> pl.DataFrame:
     for record in journal_reader:
         try:
             try:
-                x = openvpn_log_regex.match(constuct_log_string(record))
+                log_string = constuct_log_string(record)
+                x = openvpn_log_regex.match(log_string)
                 if x is not None:
                     add_entry(log_collection, x)
             except TypeError:
