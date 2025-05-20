@@ -18,12 +18,7 @@ def cast_columns(df: pl.DataFrame) -> pl.DataFrame:
 
 
 def create_empty_log_collection():
-    return {
-        "ts": [],
-        "id.orig_h": [],
-        "id.orig_p": [],
-        "client": []
-    }
+    return {"ts": [], "id.orig_h": [], "id.orig_p": [], "client": []}
 
 
 def add_entry(log_collection, x):
