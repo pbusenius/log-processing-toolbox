@@ -1,3 +1,5 @@
+import os
+import requests
 import ipaddress
 import polars as pl
 from polars_maxminddb import (
@@ -7,7 +9,11 @@ from polars_maxminddb import (
     ip_lookup_latitude,
     ip_lookup_longitude,
 )
+from dotenv import load_dotenv
 
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 def city_information(
     df: pl.DataFrame,
@@ -70,13 +76,34 @@ def is_global(df: pl.DataFrame, ip_column: str = "id.orig_h"):
     )
 
 
+def vpn_api_call(ip: str, key: str) -> bool:
+    response = requests.get(f"https://vpnapi.io/api/{ip}?key={API_KEY}")
+
+    if response.status_code == 200:
+        body = response.json()
+
+        return body["security"][key]
+    
+    return False
+
+
 def is_vpn(df: pl.DataFrame, ip_column: str = "id.orig_h"):
+    return df.with_columns(
+        pl.col(ip_column)
+        .map_elements(
+            lambda x: vpn_api_call(x, "vpn"), return_dtype=pl.Boolean
+        )
+        .alias("is_vpn")
+    )
     pass
 
 
 def is_tor(df: pl.DataFrame, ip_column: str = "id.orig_h"):
-    pass
-
-
-def is_proxy(df: pl.DataFrame, ip_column: str = "id.orig_h"):
+    return df.with_columns(
+        pl.col(ip_column)
+        .map_elements(
+            lambda x: vpn_api_call(x, "tor"), return_dtype=pl.Boolean
+        )
+        .alias("is_tor")
+    )
     pass
