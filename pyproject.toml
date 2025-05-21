@@ -9,6 +9,8 @@ authors = [
 requires-python = ">=3.8"
 dependencies = [
     "cysystemd>=2.0.1",
+    "dfvfs>=20240505",
+    "dotenv>=0.9.9",
     "folium>=0.18.0",
     "matplotlib>=3.7.5",
     "polars>=1.8.2",
