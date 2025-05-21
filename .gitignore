@@ -12,3 +12,9 @@ wheels/
 # Example data
 data
 *.csv
+
+# case files
+case
+
+
+.env
